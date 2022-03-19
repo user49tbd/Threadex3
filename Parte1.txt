@@ -1,0 +1,15 @@
+package Pack1;
+
+import java.util.concurrent.Semaphore;
+
+import Pack2.class3b;
+public class class3 {
+	public static void main(String[]args) {
+		int quant = 7;
+		Semaphore sm = new Semaphore(quant);
+		for(int c=0;c<7;c++) {
+			Thread t = new class3b(sm,c);
+			t.start();
+		}
+	}
+}

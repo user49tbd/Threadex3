@@ -1,0 +1,110 @@
+package Pack2;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+
+public class class3b extends Thread{
+	Semaphore sm;
+	private int numbt;
+	int[] a= new int[3];
+	static int[][] b = new int[7][2];
+	List<pt> ls = new ArrayList<>();
+	static int g1;
+	public class3b(Semaphore sm,int numbt) {
+		this.sm=sm;
+		this.numbt=numbt;
+		//g1=numbt;
+	}
+	@Override
+	public void run() {
+		//-----------------------------------
+		for(int c=0;c<2;c++) {
+		try {
+			
+			sm.acquire();
+			for(int d=0;d<3;d++) {
+				int num1 = (int)((Math.random()*15)+5);
+				a[d]=num1;
+			}
+			int g = 20;
+			for(int h:a) {
+				if(g>h) {
+					g=h;
+				}
+			}
+			
+			b[numbt][c]=g;
+			//--------------
+			g1++;
+			//--------------
+			int j=0;
+			if(g1==14) {
+			sleep(3000);
+			for(int y=0;y<7;y++) {
+				for(int z=0;z<2;z++) {
+					ls.add(new pt(j,z,b[y][z]));
+				}
+				j++;
+			}
+			Collections.sort(ls,new compres());
+			System.out.println(ls);
+			}
+		}catch(Exception e) {
+		}finally {
+			sm.release();
+		}
+		}
+		//-----------------------------------
+		super.run();
+	}
+	
+}
+//--------------------------------------
+class pt implements Comparable<pt>{
+	private Integer tn;
+	private Integer qc;
+	private Integer vel;
+	public pt(Integer tn,Integer qc,Integer vel){
+		this.tn = tn;
+		this.qc=qc;
+		this.vel=vel;
+	}
+	
+	public Integer getTn() {
+		return tn;
+	}
+
+	public Integer getVel() {
+		return vel;
+	}
+	public Integer getQc() {
+		return qc;
+	}
+
+	@Override
+	public String toString() {
+		return "[escuderia=" + tn + ", carro=" + qc +", velocidade=" + vel + "]";
+	}
+
+	@Override
+	public int compareTo(pt o) {
+		// TODO Auto-generated method stub
+		return this.getVel().compareTo(o.getVel());
+	}
+	
+}
+
+
+class compres implements Comparator<pt>{
+
+	@Override
+	public int compare(pt t1, pt t2) {
+		// TODO Auto-generated method stub
+		int no = t1.getVel().compareTo(t2.getVel());
+		return no;
+	}
+	
+}
